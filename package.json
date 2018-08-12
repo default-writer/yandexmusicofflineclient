@@ -1,0 +1,32 @@
+{
+  "name": "@root_admin/yandex-music-offline-client",
+  "version": "1.0.0",
+  "description": "Yandex Music offline client application",
+  "main": "index.js",
+  "directories": {
+    "test": "www"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hack2root/yandexmusicofflineclient.git"
+  },
+  "keywords": [
+    "yandex",
+    "music",
+    "offline",
+    "client"
+  ],
+  "author": "Artur Mustafin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hack2root/yandexmusicofflineclient/issues"
+  },
+  "homepage": "https://github.com/hack2root/yandexmusicofflineclient#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
