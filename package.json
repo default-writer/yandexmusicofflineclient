@@ -4,10 +4,10 @@
   "description": "Yandex Music offline client application",
   "main": "index.js",
   "directories": {
-    "test": "www"
+    "dev": "www"
   },
   "scripts": {
-    "test": "mocha"
+    "dev": "index"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/hack2root/yandexmusicofflineclient#readme",
   "devDependencies": {
+    "@root_admin/lazyeval": "^1.0.1",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
   }
