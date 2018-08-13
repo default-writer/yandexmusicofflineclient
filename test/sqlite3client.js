@@ -35,7 +35,6 @@ let controller = function (dbo, obj, value) {
         if (context.db && context.sql) {
             try {
                 dbo.query(context.db, context.sql);
-                delete context.sql;
             } catch (err) {
                 console.log(err.message);
             }
