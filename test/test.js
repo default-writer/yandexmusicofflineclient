@@ -15,7 +15,7 @@ const sqlite3Database = dbo({
     }
   }),
   query: (db, sql) => {
-    db.each(sql, (err) => {
+    db.each(sql, (err, row) => {
       if (err) {
         throw new Error("db error: " + err.message);
       }
@@ -397,16 +397,19 @@ describe('open sqlite3 database', function () {
     // 2. ACT
     database.open(connection);
     connection.sql = `
-    SELECT DISTINCT * FROM (SELECT tr.TrackId,
-      alb.CoverUri,
-      alb.Title,
-      TrackPosition track,
-      Title,
-      alb.ArtistsString
+  SELECT DISTINCT * FROM (SELECT tr.TrackId track,
+      alb.CoverUri url,
+      alb.Title titile,
+      TrackPosition position,
+      name,
+      alb.ArtistsString album,
+      alb.Year year,
+      alb.AlbumVersion,
+      alb.GenreId genre
   FROM (
   SELECT *
    FROM (
-            SELECT Id, Title trackNum
+            SELECT Id, Title name
               FROM T_Track AS tr
              WHERE tr.IsOffline = '1'
         )
@@ -419,8 +422,7 @@ describe('open sqlite3 database', function () {
   tr,
   T_Album alb
   WHERE alb.Id = tr.AlbumId
-  ORDER BY alb.Id,
-  track);
+  ORDER BY alb.Id, position);
 `;
     database.query(connection);
 
