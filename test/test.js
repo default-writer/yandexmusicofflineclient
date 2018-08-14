@@ -15,9 +15,9 @@ const sqlite3Database = dbo({
     }
   }),
   query: (db, sql) => {
-    db.each(sql, (err, row) => {
+    db.each(sql, (err) => {
       if (err) {
-        throw new Error("db error (" + row.id + ":" + row.name + "): " + err.message);
+        throw new Error("db error: " + err.message);
       }
       console.log(row);
     })
@@ -406,7 +406,7 @@ describe('open sqlite3 database', function () {
   FROM (
   SELECT *
    FROM (
-            SELECT *
+            SELECT Id, Title trackNum
               FROM T_Track AS tr
              WHERE tr.IsOffline = '1'
         )
