@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
 
-const dbo = require('./sqlite3client').Database;
+const dbo = require('../dbo/dbo');
 const sqlite3 = require('sqlite3').verbose();
 
 const sqlite3Database = dbo({
-  open: () => new sqlite3.Database('./test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite', sqlite3.OPEN_READONLY, (err) => {
+  open: (source) => new sqlite3.Database(source, sqlite3.OPEN_READONLY, (err) => {
     if (err) {
       throw new Error("db error: " + err.message);
     }
@@ -22,8 +22,12 @@ const sqlite3Database = dbo({
       console.log(row);
     })
   }
-})
+});
+
 const global_connection = {};
+
+let connection = global_connection;
+connection.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
 // 1 1`2 2`
 
@@ -32,6 +36,7 @@ describe('open sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.open();
@@ -46,6 +51,7 @@ describe('close sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.close();
@@ -60,6 +66,8 @@ describe('open sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
+
     let connection = global_connection;
 
     // 2. ACT
@@ -75,6 +83,8 @@ describe('close sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
+
     let connection = global_connection;
 
     // 2. ACT
@@ -92,6 +102,7 @@ describe('open sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.open();
@@ -106,6 +117,8 @@ describe('open sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
+
     let connection = global_connection;
 
     // 2. ACT
@@ -121,6 +134,7 @@ describe('close sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.close();
@@ -135,6 +149,8 @@ describe('close sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
+
     let connection = global_connection;
 
     // 2. ACT
@@ -152,6 +168,7 @@ describe('open sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.open();
@@ -166,6 +183,7 @@ describe('open sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -181,6 +199,7 @@ describe('close sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -196,6 +215,7 @@ describe('close sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.close();
@@ -212,6 +232,7 @@ describe('open sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -227,6 +248,7 @@ describe('close sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -242,6 +264,7 @@ describe('open sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.open();
@@ -256,6 +279,7 @@ describe('close sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.close();
@@ -272,6 +296,7 @@ describe('open sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -287,6 +312,7 @@ describe('open sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.open();
@@ -301,6 +327,7 @@ describe('close sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -316,6 +343,7 @@ describe('close sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.close();
@@ -332,6 +360,7 @@ describe('open sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -347,6 +376,7 @@ describe('open sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.open();
@@ -361,6 +391,7 @@ describe('close sqlite3 database 1', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 
     // 2. ACT
     database.close();
@@ -375,6 +406,7 @@ describe('close sqlite3 database 2', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -392,6 +424,7 @@ describe('open sqlite3 database', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
@@ -455,7 +488,9 @@ T_Artist art ON tr.ArtistId = art.Id
 ORDER BY alb.Id,
 position;
 `;
-    database.query(connection);
+    database.query(connection, (row) => {
+      console.log(row);
+    });
 
     // 3. ASSERT
     expect(connection.sql).not.to.be.equal(undefined);
@@ -468,6 +503,7 @@ describe('close sqlite3 database', function () {
 
     // 1. ARRANGE
     let database = sqlite3Database;
+    database.source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
     let connection = global_connection;
 
     // 2. ACT
