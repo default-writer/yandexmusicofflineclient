@@ -6,33 +6,20 @@ let connection = {};
 let context = {};
 
 let controller = function (dbo, obj, value) {
-    if (value === open) {
-        try {
-            let db = dbo.open(context.source, context.callback);
-            context.db = db;
-            return;
-        } catch (err) {
-            console.log(err.message);
+    try {
+        switch (value) {
+            case open:
+                context.db = dbo.open(context.source, context.callback);
+                break;
+            case query:
+                dbo.query(context.db, context.sql, context.callback);
+                break;
+            case close:
+                dbo.close(context.db, context.callback);
+                break;
         }
-        return;
-    }
-    if (value === close) {
-        try {
-            dbo.close(context.db, context.callback);
-            delete context.db;
-            return;
-        } catch (err) {
-            console.log(err.message);
-        }
-        return;
-    }
-    if (value === query) {
-        try {
-            dbo.query(context.db, context.sql, context.callback);
-        } catch (err) {
-            console.log(err.message);
-        }
-        return;
+    } catch (err) {
+        console.log(err.message);
     }
 };
 
@@ -84,8 +71,8 @@ Object.defineProperty(connection, 'query', {
 let dbo = (db) => new Proxy(connection, {
     set(obj, key, value) {
         if (key === 'source') {
-             obj[key] = value;
-             return;
+            obj[key] = value;
+            return;
         }
         if (key === 'action') {
             controller(db, obj, value);
