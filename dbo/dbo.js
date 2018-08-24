@@ -2,15 +2,15 @@ let connection = {};
 let context = {};
 
 let controller = {
+    source: null,
     open: function (dbo) {
-        context.db = dbo.open(context, context.callback);
+        dbo.open(context, context.callback);
     },
     query: function (dbo) {
-        dbo.query(context.db, context.sql, context.callback);
+        dbo.query(context, context.callback);
     },
     close: function (dbo) {
-        dbo.close(context.db, context.callback);
-        delete context.db;
+        dbo.close(context, context.callback);
     }
 };
 
@@ -40,22 +40,9 @@ for (let property of Object.getOwnPropertyNames(controller)) {
 (Object.freeze || Object)(Object.prototype);
 
 module.exports = (dbo) => new Proxy(connection, {
-    set(obj, key, value) {
-        if (key === 'source') {
-            obj[key] = value;
-            return;
-        }
-        if (key === 'sql') {
-            obj[key] = value;
-            return;
-        }
-        if (key === 'action') {
-            try {
-                controller[value](dbo);
-            } catch (err) {
-                console.log(err.message);
-            }
-            return;
+    set(obj, key, action) {
+        if (key === 'action' && controller[action]) {
+            controller[action](dbo);
         }
     }
 });

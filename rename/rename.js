@@ -9,7 +9,7 @@ const connection = {
 };
 
 const database = dbo({
-    open: (context, callback) => new sqlite3.Database(context.source, sqlite3.OPEN_READONLY, (err) => {
+    open: (context, callback) => context.db = new sqlite3.Database(context.source, sqlite3.OPEN_READONLY, (err) => {
         if (err) {
             throw new Error("db error: " + err.message);
         }
@@ -17,8 +17,8 @@ const database = dbo({
             callback(context.source);
         }
     }),
-    query: (db, sql, callback) => {
-        db.each(sql, (err, row) => {
+    query: (context, callback) => {
+        context.db.each(context.sql, (err, row) => {
             if (err) {
                 throw new Error("db error: " + err.message);
             }
@@ -27,14 +27,18 @@ const database = dbo({
             }
         });
     },
-    close: (db, callback) => db.close((err) => {
-        if (err) {
-            throw err;
-        }
-        if (callback && typeof callback === 'function') {
-            callback(db);
-        }
-    })
+    close: (context, callback) => {
+        let db = context.db;
+        context.db.close((err) => {
+            if (err) {
+                throw err;
+            }
+            if (callback && typeof callback === 'function') {
+                callback(db);
+            }
+        });
+        delete context.db;
+    }
 });
 
 find_all_files_names(connection, {
