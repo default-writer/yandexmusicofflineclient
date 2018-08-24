@@ -4,14 +4,9 @@ const dbo = require('../dbo/dbo');
 const sqlite3 = require('sqlite3').verbose();
 
 const sqlite3Database = dbo({
-  open: (source) => new sqlite3.Database(source, sqlite3.OPEN_READONLY, (err) => {
+  open: (context) => new sqlite3.Database(context.source, sqlite3.OPEN_READONLY, (err) => {
     if (err) {
       throw new Error("db error: " + err.message);
-    }
-  }),
-  close: (db) => db.close((err) => {
-    if (err) {
-      throw err;
     }
   }),
   query: (db, sql) => {
@@ -21,7 +16,12 @@ const sqlite3Database = dbo({
       }
       console.log(row);
     })
-  }
+  },
+  close: (db) => db.close((err) => {
+    if (err) {
+      throw err;
+    }
+  })
 });
 
 const global_connection = {};

@@ -9,12 +9,12 @@ const connection = {
 };
 
 const database = dbo({
-    open: (source, callback) => new sqlite3.Database(source, sqlite3.OPEN_READONLY, (err) => {
+    open: (context, callback) => new sqlite3.Database(context.source, sqlite3.OPEN_READONLY, (err) => {
         if (err) {
             throw new Error("db error: " + err.message);
         }
         if (callback && typeof callback === 'function') {
-            callback(source);
+            callback(context.source);
         }
     }),
     query: (db, sql, callback) => {
