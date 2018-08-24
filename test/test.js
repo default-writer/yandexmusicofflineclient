@@ -293,7 +293,6 @@ describe('open sqlite3 database', function () {
     let database = sqlite3db;
     let connection = global_connection;
     // 2. ACT
-    database.open(connection);
     connection.sql = `
     SELECT DISTINCT tr.TrackId file,
     alb.CoverUri url,
@@ -325,6 +324,7 @@ T_Artist art ON tr.ArtistId = art.Id
 ORDER BY alb.Id,
 position;
 `;
+    database.open(connection);
     database.query(connection, (row) => {
       console.log(row);
     });
