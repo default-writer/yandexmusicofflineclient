@@ -296,14 +296,14 @@ describe('open sqlite3 database', function () {
     connection.sql = `
     SELECT DISTINCT tr.TrackId file,
     alb.CoverUri url,
-    alb.Title titile,
+    alb.Title album,
     tr.TrackPosition position,
-    tr.Title title,
+    tr.Title track,
     art.Name || ' - ' || alb.ArtistsString autor,
     alb.Year year,
-    alb.AlbumVersion album,
+    alb.AlbumVersion version,
     alb.GenreId genre
-FROM (
+    FROM (
 SELECT Title,
       art.ArtistId,
       ta.TrackId,

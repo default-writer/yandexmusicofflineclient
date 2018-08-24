@@ -46,11 +46,23 @@ find_all_files_names(connection, {
         console.log('open ' + src);
     },
     query: (row) => {
-        console.log('data ' + JSON.stringify(row));
-    },
-    close: (db) => {
-        console.log('close ' + db.filename);
-    }
+        //console.log('data ' + JSON.stringify(row));
+        let file = (row.album ? (row.album + ' - ') : '') + (row.version ? (row.version + ' - ') : '') + (row.position ? (row.position + ' - ') : '') + row.track;
+        console.log(row.file + ' --> ' + file);
+        let dir = '/Users/user/Music/Pentatonix/';
+        fs.exists(dir + row.file + '.mp3', (exists) => {
+            if (exists === true) {
+                fs.rename(dir + row.file + '.mp3', dir + file + '.mp3', function (err) {
+                    if (err) console.log('ERROR: ' + err);
+                });
+            } else {
+                console.log(row.file);
+            }
+        });
+},
+close: (db) => {
+    console.log('close ' + db.filename);
+}
 });
 
 // 2. ACT

@@ -4,13 +4,13 @@ let context = {};
 let controller = {
     source: null,
     open: function (dbo) {
-        dbo.open(context, context.callback);
+        dbo.open(context, typeof context.callback === 'function' ? context.callback : undefined);
     },
     query: function (dbo) {
-        dbo.query(context, context.callback);
+        dbo.query(context, typeof context.callback === 'function' ? context.callback : undefined);
     },
     close: function (dbo) {
-        dbo.close(context, context.callback);
+        dbo.close(context, typeof context.callback === 'function' ? context.callback : undefined);
     }
 };
 
