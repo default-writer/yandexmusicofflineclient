@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 const sqlite3db = dbo({
   open: (context) => {
-    context.db = new sqlite3.Database(source, sqlite3.OPEN_READONLY, (err) => {
+    context.db = new sqlite3.Database(context.source ? context.source : source, sqlite3.OPEN_READONLY, (err) => {
       if (err) {
         throw new Error("db error: " + err.message);
       }
@@ -27,7 +27,9 @@ const sqlite3db = dbo({
     delete context.db;
   }
 });
-const global_connection = {};
+const global_connection = {
+  source: source
+};
 // 1 1`2 2`
 describe('open sqlite3 database 1', function () {
   it('should open sqlite3 database 1', function () {
