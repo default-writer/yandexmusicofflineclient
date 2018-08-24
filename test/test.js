@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const source = './test/db/musicdb_3f0b48061129292a1244c536233a24ec.sqlite';
 const sqlite3db = dbo({
   open: (context) => {
-    context.db = new sqlite3.Database(context.source ? context.source : source, sqlite3.OPEN_READONLY, (err) => {
+    context.db = new sqlite3.Database(source, sqlite3.OPEN_READONLY, (err) => {
       if (err) {
         throw new Error("db error: " + err.message);
       }
@@ -27,9 +27,7 @@ const sqlite3db = dbo({
     delete context.db;
   }
 });
-const global_connection = {
-  source: source
-};
+const global_connection = {};
 // 1 1`2 2`
 describe('open sqlite3 database 1', function () {
   it('should open sqlite3 database 1', function () {
@@ -296,34 +294,6 @@ describe('open sqlite3 database', function () {
     let connection = global_connection;
     // 2. ACT
     database.open(connection);
-    /*
-      SELECT DISTINCT * FROM (SELECT tr.TrackId track,
-      alb.CoverUri url,
-      alb.Title titile,
-      TrackPosition position,
-      name,
-      alb.ArtistsString album,
-      alb.Year year,
-      alb.AlbumVersion,
-      alb.GenreId genre
-  FROM (
-  SELECT *
-   FROM (
-            SELECT Id, Title name
-              FROM T_Track AS tr
-             WHERE tr.IsOffline = '1'
-        )
-        tr,
-        T_TrackAlbum ta,
-        T_TrackArtist art
-  WHERE tr.Id == art.TrackId AND 
-        tr.Id == ta.TrackId
-  )
-  tr,
-  T_Album alb
-  WHERE alb.Id = tr.AlbumId
-  ORDER BY alb.Id, position);
-    */
     connection.sql = `
     SELECT DISTINCT tr.TrackId file,
     alb.CoverUri url,
